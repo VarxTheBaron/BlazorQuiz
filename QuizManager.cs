@@ -11,9 +11,9 @@ public class QuizManager
 		return Quizzes[id];
 	}
 
-	public void SubmitAnswer()
+	public void SubmitAnswer(ParticipantAnswer pa, Question question)
 	{
-
+		question.ParticipantAnswers.Add(pa);
 	}
 
 	public Dictionary<string, Quiz> Quizzes = new Dictionary<string, Quiz>()
