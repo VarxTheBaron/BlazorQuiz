@@ -2,12 +2,16 @@
 @inject QuizManager QuizManager
 @inject NavigationManager NavigationManager
 @implements IDisposable
+@rendermode InteractiveServer
 
-<PageTitle>Quizz participant</PageTitle>
 <div>Participant</div>
 
 @if (_quiz != null)
 {
+    <PageTitle>Quizz participant - @_quiz.Title</PageTitle>
+    <h4>
+        @_quiz.Title
+    </h4>
     <h3>
         @_quiz.Questions[_quiz.CurrentQuestionIndex].Text
     </h3>
@@ -15,7 +19,7 @@
     <div class="answers-div">
         @for (int i = 0; i < _quiz.Questions[_quiz.CurrentQuestionIndex].Answers.Count; i++)
         {
-            <button class="answer-button">
+            <button class="answer-button" @onclick="@(e => Submit(i))">
                 @_quiz.Questions[_quiz.CurrentQuestionIndex].Answers[i]
             </button>
         }
@@ -39,6 +43,18 @@
         if (_quiz == null) NavigationManager.NotFound();
 
         Refresh();
+    }
+
+    private void Submit(int index)
+    {
+        ParticipantAnswer participantAnswer = new()
+        {
+            AnswerIndex = _quiz.CurrentQuestionIndex,
+            ParticipantID = "myId",
+            TimeStamp = DateTime.UtcNow
+        };
+
+        QuizManager.SubmitAnswer(participantAnswer, _quiz.Questions[_quiz.CurrentQuestionIndex]);
     }
 
     public void Refresh()
