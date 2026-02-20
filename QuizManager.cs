@@ -2,6 +2,10 @@ public class QuizManager
 {
 	public Action? OnStateChanged;
 
+	public Dictionary<string, Quiz> Quizzes = [];
+
+	private QuizManager() { }
+
 	public Quiz GetQuiz(int Id)
 	{
 		return new Quiz();
