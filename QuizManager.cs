@@ -1,6 +1,7 @@
 public class QuizManager
 {
 	public Action? OnStateChanged;
+	public event Action? OnNextQuestion;
 
 
 	public QuizManager() { }
@@ -22,6 +23,7 @@ public class QuizManager
 		if (quiz.CurrentQuestionIndex == quiz.Questions.Count - 1) return;
 		quiz.CurrentQuestionIndex++;
 		OnStateChanged?.Invoke();
+		OnNextQuestion?.Invoke();
 	}
 
 	public Dictionary<string, Quiz> Quizzes = new Dictionary<string, Quiz>()
