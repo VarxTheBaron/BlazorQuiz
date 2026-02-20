@@ -11,7 +11,7 @@
 	@foreach (var quizz in QuizManager.Quizzes)
 	{
 		<li>
-			<NavLink href=@($"quiz?={quizz.Key}")>@quizz.Key</NavLink>
+			<NavLink href=@($"presenter/quiz?id={quizz.Key}")>@quizz.Key</NavLink>
 		</li>
 	}
 </ul>

@@ -1,10 +1,14 @@
-@page "/quiz"
+@page "/presenter/quiz"
 @inject QuizManager QuizManager
 
 <PageTitle>Quiz @Id</PageTitle>
-<div>Presenter</div>
+@if(Id == "")
+{
+    <p>Quizz not available</p>
+}
+<h3>Quiz: @Id</h3>
 
 @code {
 	[SupplyParameterFromQuery]
-	private string Id { get; set; }
+	private string? Id { get; set; }
 }
