@@ -5,14 +5,16 @@ public class Question
     public List<string> Answers { get; set; } = [];
     public int CorrectAnswer { get; set; }
     public List<ParticipantAnswer> ParticipantAnswers { get; set; } = [];
-    // public int[] VoteCount
-    // {
-    //     get => {
-    //         int[] count = new int[ParticipantAnswers.count];
-    //         for (int i = 0; i < ParticipantAnswers.count; i++)
-    //         {
-    //             count[i] = ParticipantAnswers[i]
-    //         }
-    //     }
-    // }
+    public int[] VoteCount
+    {
+        get
+        {
+            int[] count = [ParticipantAnswers.Count];
+            for (int i = 0; i < count.Length; i++)
+            {
+                count[i] = ParticipantAnswers[i].AnswerIndex;
+            }
+            return count;
+        }
+    }
 }
