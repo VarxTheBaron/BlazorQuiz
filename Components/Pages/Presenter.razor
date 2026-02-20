@@ -1,14 +1,65 @@
 @page "/presenter/quiz"
 @inject QuizManager QuizManager
+@rendermode InteractiveServer
+@implements IDisposable
 
 <PageTitle>Quiz @Id</PageTitle>
-@if(Id == "")
+@if (Id == "")
 {
-    <p>Quizz not available</p>
+	<p>Quizz not available</p>
 }
 <h3>Quiz: @Id</h3>
 
+@if (activeQuiz != null)
+{
+	<section>
+		<div>
+			<h2>Question: @activeQuiz.Questions[currentQuestion].Text</h2>
+			@* @foreach (var answer in activeQuiz.Questions[currentQuestion].Answers)
+			{
+				<div>@answer</div>
+			} *@
+			@for (int i = 0; i < activeQuiz.Questions[activeQuiz.CurrentQuestionIndex].Answers.Count; i++)
+			{
+				<div>
+					<p>Answer: @activeQuiz.Questions[currentQuestion].Answers[i]</p>
+					<p>Votes: @activeQuiz.Questions[currentQuestion].VoteCount[i]</p>
+				</div>
+			}
+
+
+			<button onclick="@NextQuestion">Next</button>
+		</div>
+	</section>
+}
+
 @code {
 	[SupplyParameterFromQuery]
-	private string? Id { get; set; }
+	private string Id { get; set; }
+	private Quiz activeQuiz;
+	private int currentQuestion = 0;
+	protected override void OnInitialized()
+	{
+		QuizManager.OnStateChanged += Refresh;
+
+		activeQuiz = QuizManager.GetQuiz(Id);
+
+		Refresh();
+
+	}
+	public void NextQuestion()
+	{
+		currentQuestion++;
+	}
+
+	public void Refresh()
+	{
+		InvokeAsync(StateHasChanged);
+	}
+
+	public void Dispose()
+	{
+		QuizManager.OnStateChanged -= Refresh;
+	}
+
 }
