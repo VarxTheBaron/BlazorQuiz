@@ -1,7 +1,15 @@
 ﻿@page "/"
+@inject QuizManager QuizManager
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<ul>
+    @foreach(var quizz in QuizManager.Quizzes)
+    {
+        <li><NavLink href="@quizz.Key">@quizz.Key</NavLink></li>
+    }
+</ul>
