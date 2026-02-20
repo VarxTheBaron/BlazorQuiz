@@ -4,7 +4,7 @@ public class QuizManager
 
 	public Dictionary<string, Quiz> Quizzes = [];
 
-	private QuizManager() { }
+	public QuizManager() { }
 
 	public Quiz GetQuiz(int Id)
 	{
