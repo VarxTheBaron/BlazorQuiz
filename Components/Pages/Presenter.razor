@@ -4,7 +4,7 @@
 @implements IDisposable
 
 <PageTitle>Quiz @Id</PageTitle>
-@if (Id == "")
+@if (string.IsNullOrEmpty(Id))
 {
 	<p>Quizz not available</p>
 }
@@ -14,16 +14,16 @@
 {
 	<section>
 		<div>
-			<h2>Question: @activeQuiz.Questions[currentQuestionIndex].Text</h2>
+			<h2>Question: @activeQuiz.Questions[activeQuiz.CurrentQuestionIndex].Text</h2>
 			@* @foreach (var answer in activeQuiz.Questions[currentQuestion].Answers)
 			{
 				<div>@answer</div>
 			} *@
-			@for (int i = 0; i < activeQuiz.Questions[currentQuestionIndex].Answers.Count; i++)
+			@for (int i = 0; i < activeQuiz.Questions[activeQuiz.CurrentQuestionIndex].Answers.Count; i++)
 			{
 				<div>
-					<p>Answer: @activeQuiz.Questions[currentQuestionIndex].Answers[i]</p>
-					<p>Votes: @activeQuiz.Questions[currentQuestionIndex].VoteCount[i]</p>
+					<p>Answer: @activeQuiz.Questions[activeQuiz.CurrentQuestionIndex].Answers[i]</p>
+					<p>Votes: @activeQuiz.Questions[activeQuiz.CurrentQuestionIndex].VoteCount[i]</p>
 				</div>
 			}
 
@@ -37,23 +37,17 @@
 	[SupplyParameterFromQuery]
 	private string Id { get; set; }
 	private Quiz activeQuiz;
-	private int currentQuestionIndex;
 	protected override void OnInitialized()
 	{
 		QuizManager.OnStateChanged += Refresh;
 
 		activeQuiz = QuizManager.GetQuiz(Id);
-		if (activeQuiz != null)
-		{
-			currentQuestionIndex = activeQuiz.CurrentQuestionIndex;
-		}
 
 		Refresh();
-
 	}
 	public void NextQuestion()
 	{
-		currentQuestionIndex++;
+		activeQuiz.CurrentQuestionIndex++;
 	}
 
 	public void Refresh()
