@@ -26,10 +26,25 @@
     </div>
 }
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<div>
+    <p>
+        Your ID: @ParticipantID
+    </p>
+</div>
+
 @code {
 
     [SupplyParameterFromQuery]
     private string? Id { get; set; }
+
+    private string ParticipantID { get; } = $"ParticipantId" + Random.Shared.Next();
+
+    private bool _hasVoted = false;
 
     private Quiz? _quiz;
 
@@ -47,14 +62,17 @@
 
     private void Submit(int index)
     {
+        if (_hasVoted == true) return;
+
         ParticipantAnswer participantAnswer = new()
         {
-            AnswerIndex = _quiz.CurrentQuestionIndex,
-            ParticipantID = "myId",
+            AnswerIndex = _quiz!.CurrentQuestionIndex,
+            ParticipantID = ParticipantID,
             TimeStamp = DateTime.UtcNow
         };
 
         QuizManager.SubmitAnswer(participantAnswer, _quiz.Questions[_quiz.CurrentQuestionIndex]);
+        _hasVoted = true;
     }
 
     public void Refresh()
