@@ -1,7 +1,10 @@
-@page "/presenter"
-<PageTitle>Quizz presenter</PageTitle>
+@page "/quiz"
+@inject QuizManager QuizManager
+
+<PageTitle>Quiz @Id</PageTitle>
 <div>Presenter</div>
 
 @code {
-
+	[SupplyParameterFromQuery]
+	private string Id { get; set; }
 }

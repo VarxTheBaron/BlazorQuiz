@@ -8,8 +8,10 @@
 Welcome to your new app.
 
 <ul>
-    @foreach(var quizz in QuizManager.Quizzes)
-    {
-        <li><NavLink href="@quizz.Key">@quizz.Key</NavLink></li>
-    }
+	@foreach (var quizz in QuizManager.Quizzes)
+	{
+		<li>
+			<NavLink href=@($"quiz?={quizz.Key}")>@quizz.Key</NavLink>
+		</li>
+	}
 </ul>
