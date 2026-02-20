@@ -1,7 +1,54 @@
 @page "/participant"
+@inject QuizManager QuizManager
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
 <PageTitle>Quizz participant</PageTitle>
 <div>Participant</div>
 
+@if (_quiz != null)
+{
+    <h3>
+        @_quiz.Questions[_quiz.CurrentQuestionIndex].Text
+    </h3>
+
+    <div class="answers-div">
+        @for (int i = 0; i < _quiz.Questions[_quiz.CurrentQuestionIndex].Answers.Count; i++)
+        {
+            <button class="answer-button">
+                @_quiz.Questions[_quiz.CurrentQuestionIndex].Answers[i]
+            </button>
+        }
+    </div>
+}
+
 @code {
+
+    [SupplyParameterFromQuery]
+    private string? Id { get; set; }
+
+    private Quiz? _quiz;
+
+    protected override void OnInitialized()
+    {
+        QuizManager.OnStateChanged += Refresh;
+
+        if (Id == null) NavigationManager.NotFound();
+
+        _quiz = QuizManager.GetQuiz(Id!);
+        if (_quiz == null) NavigationManager.NotFound();
+
+        Refresh();
+    }
+
+    public void Refresh()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        QuizManager.OnStateChanged -= Refresh;
+    }
 
 }
