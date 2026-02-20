@@ -8,10 +8,12 @@
 <p>Choose a quizz!</p>
 
 <ul>
-    @foreach(var quizz in QuizManager.Quizzes)
-    {
-        <li><NavLink href="@quizz.Key">@quizz.Key</NavLink></li>
-    }
+	@foreach (var quizz in QuizManager.Quizzes)
+	{
+		<li>
+			<NavLink href=@($"quiz?={quizz.Key}")>@quizz.Key</NavLink>
+		</li>
+	}
 </ul>
 
 @code
