@@ -28,7 +28,7 @@
 			}
 
 
-			<button onclick="@NextQuestion">Next</button>
+			<button @onclick="@(() => QuizManager.NextQuestion(activeQuiz))">Next</button>
 		</div>
 	</section>
 }
@@ -45,10 +45,10 @@
 
 		Refresh();
 	}
-	public void NextQuestion()
+	@* public void NextQuestion()
 	{
 		activeQuiz.CurrentQuestionIndex++;
-	}
+	} *@
 
 	public void Refresh()
 	{

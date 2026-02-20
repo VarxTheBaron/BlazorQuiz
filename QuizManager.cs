@@ -16,6 +16,13 @@ public class QuizManager
 		question.ParticipantAnswers.Add(pa);
 	}
 
+	public void NextQuestion(Quiz quiz)
+	{
+		if (quiz.CurrentQuestionIndex == quiz.Questions.Count - 1) return;
+		quiz.CurrentQuestionIndex++;
+		OnStateChanged?.Invoke();
+	}
+
 	public Dictionary<string, Quiz> Quizzes = new Dictionary<string, Quiz>()
 	   {
 		   {
