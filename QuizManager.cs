@@ -14,6 +14,7 @@ public class QuizManager
 	public void SubmitAnswer(ParticipantAnswer pa, Question question)
 	{
 		question.ParticipantAnswers.Add(pa);
+		OnStateChanged?.Invoke();
 	}
 
 	public void NextQuestion(Quiz quiz)
