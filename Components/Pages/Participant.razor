@@ -19,7 +19,8 @@
     <div class="answers-div">
         @for (int i = 0; i < _quiz.Questions[_quiz.CurrentQuestionIndex].Answers.Count; i++)
         {
-            <button class="answer-button" @onclick="@(e => Submit(i))">
+            int currentChoice = i;
+            <button class="answer-button" @onclick="@(e => Submit(currentChoice))">
                 @_quiz.Questions[_quiz.CurrentQuestionIndex].Answers[i]
             </button>
         }
@@ -66,7 +67,7 @@
 
         ParticipantAnswer participantAnswer = new()
         {
-            AnswerIndex = _quiz!.CurrentQuestionIndex,
+            AnswerIndex = index,
             ParticipantID = ParticipantID,
             TimeStamp = DateTime.UtcNow
         };
