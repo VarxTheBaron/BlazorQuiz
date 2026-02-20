@@ -9,10 +9,10 @@ public class Question
     {
         get
         {
-            int[] count = [ParticipantAnswers.Count];
+            int[] count = [Answers.Count];
             for (int i = 0; i < count.Length; i++)
             {
-                count[i] = ParticipantAnswers[i].AnswerIndex;
+                count[i] = ParticipantAnswers.Count(pa => pa.AnswerIndex == i);
             }
             return count;
         }
