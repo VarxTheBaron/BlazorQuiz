@@ -5,9 +5,10 @@ public class QuizManager
 
 	public QuizManager() { }
 
-	public Quiz GetQuiz(int Id)
+	public Quiz? GetQuiz(string id)
 	{
-		return new Quiz();
+		if (!Quizzes.ContainsKey(id)) return null;
+		return Quizzes[id];
 	}
 
 	public void SubmitAnswer()
